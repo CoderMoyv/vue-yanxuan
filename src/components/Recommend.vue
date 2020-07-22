@@ -1,6 +1,11 @@
 <template>
   <div class="body-box">
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+    <van-swipe
+      class="my-swipe"
+      :autoplay="3000"
+      lazy-render:true
+      indicator-color="white"
+    >
       <van-swipe-item
         ><img src="https://moyv.top/yanxuan/recommend/banner1.jpg" alt=""
       /></van-swipe-item>
@@ -40,10 +45,12 @@
     </div>
     <!--菜单 -->
     <div class="menu-box">
+      <router-link to="/item">
       <div class="menu-item">
         <img src="../assets/images/icon_new.png" alt="" />
         <div>新品首发</div>
       </div>
+      </router-link>
       <div class="menu-item">
         <img src="../assets/images/icon_live.png" alt="" />
         <div>居家生活</div>
@@ -151,37 +158,13 @@
           </div>
         </div>
         <div class="hot-sell-line2">
-          <div class="hot-sell-line2-item">
-            <div>居家生活榜</div>
-            <img src="../assets/images/icon_chair.png" alt="" />
-          </div>
-          <div class="hot-sell-line2-item">
-            <div>居家生活榜</div>
-            <img src="../assets/images/icon_chair.png" alt="" />
-          </div>
-          <div class="hot-sell-line2-item">
-            <div>居家生活榜</div>
-            <img src="../assets/images/icon_chair.png" alt="" />
-          </div>
-          <div class="hot-sell-line2-item">
-            <div>居家生活榜</div>
-            <img src="../assets/images/icon_chair.png" alt="" />
-          </div>
-          <div class="hot-sell-line2-item">
-            <div>居家生活榜</div>
-            <img src="../assets/images/icon_chair.png" alt="" />
-          </div>
-          <div class="hot-sell-line2-item">
-            <div>居家生活榜</div>
-            <img src="../assets/images/icon_chair.png" alt="" />
-          </div>
-          <div class="hot-sell-line2-item">
-            <div>居家生活榜</div>
-            <img src="../assets/images/icon_chair.png" alt="" />
-          </div>
-          <div class="hot-sell-line2-item">
-            <div>居家生活榜</div>
-            <img src="../assets/images/icon_chair.png" alt="" />
+          <div
+            class="hot-sell-line2-item"
+            v-for="(item, index) in hotSellData"
+            :key="index"
+          >
+            <div>{{ item.title }}</div>
+            <img v-lazy="item.imgSrc" alt="" />
           </div>
         </div>
       </div>
@@ -208,81 +191,20 @@
       </div>
       <div class="card-content">
         <div class="flash-sale-list">
-          <div class="flash-sale-item">
+          <div
+            class="flash-sale-item"
+            v-for="(item, index) in flashSaleData"
+            :key="index"
+          >
             <div class="flash-sale-item-img">
-              <img src="../assets/images/icon_beef.png" alt="" />
+              <img v-lazy="item.imgSrc" alt="" />
             </div>
             <div class="flash-sale-item-price">
               <div class="flash-sale-item-price1">
-                ¥42.8
+                {{item.actualPrice}}
               </div>
               <div class="flash-sale-item-price2">
-                ¥46
-              </div>
-            </div>
-          </div>
-          <div class="flash-sale-item">
-            <div class="flash-sale-item-img">
-              <img src="../assets/images/icon_beef.png" alt="" />
-            </div>
-            <div class="flash-sale-item-price">
-              <div class="flash-sale-item-price1">
-                ¥42.8
-              </div>
-              <div class="flash-sale-item-price2">
-                ¥46
-              </div>
-            </div>
-          </div>
-          <div class="flash-sale-item">
-            <div class="flash-sale-item-img">
-              <img src="../assets/images/icon_beef.png" alt="" />
-            </div>
-            <div class="flash-sale-item-price">
-              <div class="flash-sale-item-price1">
-                ¥42.8
-              </div>
-              <div class="flash-sale-item-price2">
-                ¥46
-              </div>
-            </div>
-          </div>
-          <div class="flash-sale-item">
-            <div class="flash-sale-item-img">
-              <img src="../assets/images/icon_beef.png" alt="" />
-            </div>
-            <div class="flash-sale-item-price">
-              <div class="flash-sale-item-price1">
-                ¥42.8
-              </div>
-              <div class="flash-sale-item-price2">
-                ¥46
-              </div>
-            </div>
-          </div>
-          <div class="flash-sale-item">
-            <div class="flash-sale-item-img">
-              <img src="../assets/images/icon_beef.png" alt="" />
-            </div>
-            <div class="flash-sale-item-price">
-              <div class="flash-sale-item-price1">
-                ¥42.8
-              </div>
-              <div class="flash-sale-item-price2">
-                ¥46
-              </div>
-            </div>
-          </div>
-          <div class="flash-sale-item">
-            <div class="flash-sale-item-img">
-              <img src="../assets/images/icon_beef.png" alt="" />
-            </div>
-            <div class="flash-sale-item-price">
-              <div class="flash-sale-item-price1">
-                ¥42.8
-              </div>
-              <div class="flash-sale-item-price2">
-                ¥46
+                 {{item.retailPrice}}
               </div>
             </div>
           </div>
@@ -292,13 +214,34 @@
   </div>
 </template>
 
-<script >
+<script>
 export default {
   data() {
     return {
-      time: 30 * 60 * 60 * 1000
+      time: 30 * 60 * 60 * 1000,
+      hotSellData: [],
+      flashSaleData: [],
     };
-  }
+  },
+  created() {
+    this.axios
+      .get("/api/hot-sell.json")
+      .then((res) => {
+        this.hotSellData = res.data.data;
+      })
+      .catch((err) => {
+        console.error("hotSellData获取失败", err);
+      });
+
+    this.axios
+      .get("/api/flash-sale.json")
+      .then((res) => {
+        this.flashSaleData = res.data.data;
+      })
+      .catch((err) => {
+        console.error("flashSaleData获取失败", err);
+      });
+  },
 };
 </script>
 
@@ -433,7 +376,7 @@ export default {
   border-radius: 50%;
   color: white;
   opacity: 0.8;
-  z-index: 999;
+  z-index: 2;
   position: relative;
   margin: 10px 0 0 10px;
 }

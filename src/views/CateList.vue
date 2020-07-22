@@ -1,75 +1,91 @@
 <template>
   <div :style="{ height: height }">
-    <div class="cate-header-box van-hairline--bottom" >
-      <div class="cate-search-box">
+    <div class="cate-header-box van-hairline--bottom">
+      <div class="cate-search-box" @click="goSearch()">
         <van-icon name="search" />
         <div>搜索商品, 共33504款好物</div>
       </div>
     </div>
     <van-sidebar v-model="activeKey">
-      <van-sidebar-item title="推荐专区" />
-      <van-sidebar-item title="新品专区" />
-      <van-sidebar-item title="居家生活" />
-      <van-sidebar-item title="服饰鞋包" />
-      <van-sidebar-item title="美食酒水" />
-      <van-sidebar-item title="个护清洁" />
-      <van-sidebar-item title="母婴亲子" />
-      <van-sidebar-item title="运动旅行" />
-      <van-sidebar-item title="数码家电" />
-      <van-sidebar-item title="严选全球" />
-    </van-sidebar>
-    <div class="cateContainer">
-      <img
-        class="cateContainer-banner"
-        src="../assets/images/banner_recommend.png"
-        alt=""
+      <van-sidebar-item
+        replace
+        :to="{ path: '/cateList', query: { id: index } }"
+        v-for="(item, index) in tabArray"
+        :key="index"
+        :title="item"
       />
-      <div class="cateList-title">口碑好货</div>
-      <div class="cateList">
-        <div class="cateItem">
-          <img src="../assets/images/icon_recommend_01.png" alt="" />
-          <div>员工精选</div>
-        </div>
-        <div class="cateItem">
-          <img src="../assets/images/icon_recommend_01.png" alt="" />
-          <div>员工精选</div>
-        </div>
-        <div class="cateItem">
-          <img src="../assets/images/icon_recommend_01.png" alt="" />
-          <div>员工精选</div>
-        </div>
-        <div class="cateItem">
-          <img src="../assets/images/icon_recommend_01.png" alt="" />
-          <div>员工精选</div>
-        </div>
-        <div class="cateItem">
-          <img src="../assets/images/icon_recommend_01.png" alt="" />
-          <div>员工精选</div>
-        </div>
-        <div class="cateItem">
-          <img src="../assets/images/icon_recommend_01.png" alt="" />
-          <div>员工精选</div>
-        </div>
-        <div class="cateItem">
-          <img src="../assets/images/icon_recommend_01.png" alt="" />
-          <div>员工精选</div>
+    </van-sidebar>
+    <!-- 右边cate容器 开始-->
+    <div class="cateContainer" v-show="tabArray[activeKey] === '推荐'">
+      <!-- banner -->
+      <img class="cateContainer-banner" :src="cateData.bannerImgSrc" alt="" />
+      <!-- 列表 循环-->
+      <div v-for="(item, index) in cateData.list" :key="index">
+        <div class="cateList-title">{{ item.itemTitle }}</div>
+        <div class="cateList">
+          <div
+            class="cateItem"
+            v-for="(itemSon, indexSon) in item.itemArray"
+            :key="indexSon"
+          >
+            <img :src="itemSon.imgSrc" alt="" />
+            <div>{{ itemSon.title }}</div>
+          </div>
         </div>
       </div>
+      <!-- 循环结束 -->
     </div>
+    <!-- 右边cate容器 结束 -->
+    <div class="cateContainer" v-show="tabArray[activeKey] !== '推荐'">
+      {{ tabArray[activeKey] }}
+    </div>
+    <!-- 底部导航栏 -->
+    <MainTabbar></MainTabbar>
   </div>
 </template>
 
-<script >
+<script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       activeKey: 0,
       sidebar_height: "",
+      cateData: {},
     };
   },
-  created() {
-    this.height = window.innerHeight;
+  computed: {
+    ...mapState(["tabArray"]),
   },
+  methods: {
+    getData() {
+      if (this.activeKey == 0) {
+        this.axios
+          .get("/api/catelist-0.json")
+          .then((res) => {
+            this.cateData = res.data.data;
+          })
+          .catch((err) => {
+            console.error("cateData获取失败", err);
+          });
+      }
+    },
+    goSearch(){
+      this.$router.push('/search')
+    }
+  },
+  created() {
+    
+    this.height = window.innerHeight;
+    this.activeKey = this.$route.query.id!==undefined ? this.$route.query.id : 0;
+    this.getData()
+  },
+  updated() {
+    this.getData()
+  },
+  mounted(){
+    document.body.style.backgroundColor="#fff";
+  }
 };
 </script>
 
@@ -125,7 +141,7 @@ export default {
 }
 .cateList {
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 16px;
   grid-row-gap: 16px;
 }
@@ -134,6 +150,7 @@ export default {
 }
 .cateItem > img {
   width: 100%;
+  height: 70px;
 }
 .cateItem > div {
   font-size: 12px;

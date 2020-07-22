@@ -1,6 +1,6 @@
 <template>
   <div style="background-color:#eee;">
-    <MainNavBar isLogo="true"></MainNavBar>
+    <MainNavBar isTxt="true"></MainNavBar>
     <div class="topic-header-box">
       <div class="topic-title">
         <img src="../assets/images/icon_topic_txt.png" alt="" />
@@ -9,26 +9,17 @@
     </div>
     <div class="card-box">
       <div class="card">
-        <div class="scrollview">
-          <div class="card-item" v-for="item in list" v-bind:key="item">
-            <div>
+        
+        <div class="scrollview" >
+          <div class="card-item" v-for="(item,index) in topicData" :key="index">
+            <div v-for="(itemSon,indexSon) in item" :key="indexSon">
               <img
                 class="card-item-img"
-                src="../assets/images/icon_topic_round_01.gif"
+                :src="itemSon.imgSrc"
                 alt=""
               />
-              <div class="card-item-title">9.9超值</div>
-              <div class="card-item-subtitle">爆品定价直降</div>
-            </div>
-
-            <div>
-              <img
-                class="card-item-img"
-                src="../assets/images/icon_topic_round_01.gif"
-                alt=""
-              />
-              <div class="card-item-title">9.9超值</div>
-              <div class="card-item-subtitle">爆品定价直降</div>
+              <div class="card-item-title">{{itemSon.title}}</div>
+              <div class="card-item-subtitle">{{itemSon.subtitle}}</div>
             </div>
           </div>
         </div>
@@ -65,22 +56,23 @@
           <div v-for="item in list2" :key="item">
             <div class="look-card" v-for="item in list2" :key="item">
               <img src="../assets/images/pic_wrappers_02.jpg" alt="" />
-            <div class="look-title ">
-              喝了这杯酸梅汤，再也不想喝奶茶了
-            </div>
-            <div class="look-detail">
-              <img src="../assets/images/icon_user01.jpg" alt="" />
-              <div class="username">网易味央：小周</div>
-              <div class="look-visits">
-                <img src="../assets/images/icon_visits.png" alt="" />
-                <p>2604</p>
+              <div class="look-title ">
+                喝了这杯酸梅汤，再也不想喝奶茶了
               </div>
-            </div>
+              <div class="look-detail">
+                <img src="../assets/images/icon_user01.jpg" alt="" />
+                <div class="username">网易味央：小周</div>
+                <div class="look-visits">
+                  <img src="../assets/images/icon_visits.png" alt="" />
+                  <p>2604</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </van-list>
+    <MainTabbar></MainTabbar>
   </div>
 </template>
 
@@ -96,6 +88,7 @@ export default {
       list2: [],
       loading: false,
       finished: false,
+      topicData:[]
     };
   },
   methods: {
@@ -116,7 +109,25 @@ export default {
         }
       }, 1000);
     },
+    swipeLeft(){
+      console.log('left')
+    },
+    swipeRight(){
+      console.log('right')
+    }
   },
+  created(){
+    this.axios.get("/api/topic.json")
+    .then(res => {
+      this.topicData=res.data.data
+    })
+    .catch(err => {
+      console.error(err); 
+    })
+  },
+  mounted(){
+    document.body.style.backgroundColor="#eee";
+  }
 };
 </script>
 
@@ -241,15 +252,15 @@ export default {
   margin-left: 4px;
   margin-right: auto;
 }
-.look-visits{
-    display: flex;
-    align-items: center;
+.look-visits {
+  display: flex;
+  align-items: center;
 }
 .look-visits img {
   width: 18px;
 }
-.look-visits p{
-    font-size: 12px;
-    color: #7f7f7f;
+.look-visits p {
+  font-size: 12px;
+  color: #7f7f7f;
 }
 </style>

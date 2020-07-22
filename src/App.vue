@@ -1,21 +1,25 @@
 <template>
   <div id="app">
     <router-view class="router-view" />
-    <MainTabbar></MainTabbar>
+   
   </div>
 </template>
 
 <script>
-import MainTabbar from "./components/MainTabbar.vue";
+
 export default {
-  components: {
-    MainTabbar
-  }
 };
 </script>
 
-<style scoped>
+<style >
 .router-view {
   margin-bottom: 50px;
+}
+.van-tabs__nav--line{
+  width: 85%;
+  height: 40px;
+}
+.text_gray{
+  color: #7f7f7f ;
 }
 </style>

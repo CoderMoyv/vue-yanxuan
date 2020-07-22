@@ -22,6 +22,7 @@
       <img src="../assets/images/icon_empty_cart.png" alt="" />
       <div>去添加点什么吧</div>
     </div>
+     <MainTabbar></MainTabbar>
   </div>
 </template>
 
@@ -30,15 +31,8 @@ export default {
   data() {
     return {};
   },
-  beforeCreate() {
-    document
-      .querySelector("body")
-      .setAttribute("style", "background-color: #f4f4f4");
-  },
-  beforeDestroy(){
-      document
-      .querySelector("body")
-      .setAttribute("style", "background-color: #fff");
+  mounted(){
+    document.body.style.backgroundColor="#f4f4f4";
   }
 };
 </script>

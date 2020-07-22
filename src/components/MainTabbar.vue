@@ -12,7 +12,7 @@
           <div :class="props.active ? icon.index_active : icon.index"></div>
         </template>
       </van-tabbar-item>
-      <van-tabbar-item replace to="/catList">
+      <van-tabbar-item replace to="/cateList">
         <span>分类</span>
         <template #icon="props">
           <div :class="props.active ? icon.sort_active : icon.sort"></div>
@@ -30,8 +30,8 @@
           <div :class="props.active ? icon.cart_active : icon.cart"></div>
         </template>
       </van-tabbar-item>
-      <van-tabbar-item replace to="/user">
-        <span>用户</span>
+      <van-tabbar-item replace :to="{path:this.$store.state.isLogin?'/userCenter':'/userLogin'}">
+        <span>个人</span>
         <template #icon="props">
           <div :class="props.active ? icon.user_active : icon.user"></div>
         </template>
@@ -65,6 +65,7 @@ export default {
 .v-tabbar {
   z-index: 99999;
   height: 50px;
+  width: 100%;
 }
 .v-icon {
   width: 20px;

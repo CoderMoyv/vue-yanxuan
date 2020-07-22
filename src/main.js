@@ -3,7 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "amfe-flexible/index.js";
-
+import MainTabbar from "./components/MainTabbar.vue";
+import axios from "axios";
+import VueTouch from "vue-touch";
 import {
   Button,
   Tabbar,
@@ -19,13 +21,22 @@ import {
   Sidebar,
   SidebarItem,
   Sticky,
-  Progress ,
-  List ,
-  Cell
+  Progress,
+  List,
+  Cell,
+  DropdownMenu,
+  DropdownItem,
+  Lazyload,
+  Form,
+  Checkbox,
+  CheckboxGroup,
+  Stepper,
+  Area,
+  Popup  
 } from "vant";
 
 Vue.config.productionTip = false;
-
+Vue.prototype.axios = axios;
 Vue.use(Button)
   .use(Tabbar)
   .use(TabbarItem)
@@ -41,8 +52,20 @@ Vue.use(Button)
   .use(SidebarItem)
   .use(Sticky)
   .use(Progress)
-  .use(List )
-  .use(Cell);
+  .use(List)
+  .use(Cell)
+  .use(DropdownMenu)
+  .use(DropdownItem)
+  .use(Lazyload)
+  .use(Form)
+  .use(Checkbox)
+  .use(CheckboxGroup)
+  .use(Stepper)
+  .use(Area)
+  .use(Popup);
+Vue.use(VueTouch, { name: "v-touch" });
+Vue.component("MainTabbar", MainTabbar);
+
 new Vue({
   router,
   store,

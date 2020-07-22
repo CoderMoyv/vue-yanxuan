@@ -3,8 +3,13 @@ import VueRouter from "vue-router";
 import Index from "../views/Index";
 import CateList from "../views/CateList.vue";
 import Topic from "../views/Topic.vue";
-import User from "../views/User.vue";
+import UserLogin from "../views/UserLogin.vue";
 import Cart from "../views/Cart.vue";
+import PhoneLogin from "../views/PhoneLogin.vue";
+import UserCenter from "../views/UserCenter.vue";
+import Search from "../views/Search.vue";
+import Item from "../views/Item.vue";
+import Detail from "../views/Detail.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -14,7 +19,7 @@ const routes = [
     component: Index
   },
   {
-    path: "/catList",
+    path: "/cateList",
     name: "CateList",
     component: CateList
   },
@@ -29,9 +34,34 @@ const routes = [
     component: Cart
   },
   {
-    path: "/user",
-    name: "User",
-    component: User
+    path: "/userLogin",
+    name: "UserLogin",
+    component: UserLogin
+  },
+  {
+    path: "/phoneLogin",
+    name: "PhoneLogin",
+    component: PhoneLogin
+  },
+  {
+    path: "/userCenter",
+    name: "UserCenter",
+    component: UserCenter
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: Search
+  },
+  {
+    path: "/item",
+    name: "Item",
+    component: Item,
+  },
+  {
+    path: "/item/detail",
+    name: "Detail",
+    component: Detail,
   }
 ];
 

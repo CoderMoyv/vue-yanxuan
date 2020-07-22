@@ -2,20 +2,22 @@
   <div>
     <div class="navbar-box van-hairline--bottom">
       <div class="navbar-left">
-        <img src="../assets/images/icon_home.png" alt="" />
+        <router-link to="/">
+          <img src="../assets/images/icon_home.png" alt="" />
+        </router-link>
       </div>
       <div class="navbar-center">
-        <p v-if="isLogo">值得买</p>
+        <p v-if="isTxt">值得买</p>
         <img
           class="logo"
-          v-if="!isLogo"
+          v-if="!isTxt"
           src="../assets/images/logo.png"
           alt=""
         />
       </div>
       <div class="navbar-right">
-        <img src="../assets/images/icon_search.png" alt="" />
-        <img src="../assets/images/icon_cart.png" alt="" />
+        <router-link to="/search"><img src="../assets/images/icon_search.png" alt="" /> </router-link>
+        <router-link to="/cart"><img src="../assets/images/icon_cart.png" alt="" /> </router-link>
       </div>
     </div>
   </div>
@@ -23,7 +25,7 @@
 
 <script>
 export default {
-  props: ["isLogo","txt"],
+  props: ["isTxt", "txt"],
 };
 </script>
 
@@ -52,12 +54,13 @@ export default {
 
 .navbar-right {
   width: 80px;
+  text-align: right;
 }
 .navbar-left img,
-.navbar-right img{
+.navbar-right img {
   width: 24px;
 }
-.navbar-right > img {
+.navbar-right  img {
   margin-left: 16px;
 }
 .logo {

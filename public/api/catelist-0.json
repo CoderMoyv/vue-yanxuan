@@ -1,0 +1,44 @@
+{
+  "data": {
+      "bannerImgSrc": "https://moyv.top/yanxuan/images/catelist/0/banner.jpg",
+      "list": [
+        {
+          "itemTitle": "",
+          "itemArray": [
+            {
+              "imgSrc": "https://moyv.top/yanxuan/images/catelist/0/1.png",
+              "title": "员工精选"
+            },
+            {
+              "imgSrc": "https://moyv.top/yanxuan/images/catelist/0/2.png",
+              "title": "人气好物"
+            },
+            {
+              "imgSrc": "https://moyv.top/yanxuan/images/catelist/0/3.png",
+              "title": "每满300-200"
+            },
+            {
+              "imgSrc": "https://moyv.top/yanxuan/images/catelist/0/4.png",
+              "title": "消暑美食"
+            },
+            {
+              "imgSrc": "https://moyv.top/yanxuan/images/catelist/0/5.png",
+              "title": "防晒好物"
+            },
+            {
+              "imgSrc": "https://moyv.top/yanxuan/images/catelist/0/6.png",
+              "title": "回购好物"
+            },
+            {
+              "imgSrc": "https://moyv.top/yanxuan/images/catelist/0/7.png",
+              "title": "清凉伴侣"
+            },
+            {
+              "imgSrc": "https://moyv.top/yanxuan/images/catelist/0/8.png",
+              "title": "99专区"
+            }
+          ]
+        }
+      ]
+    }
+}

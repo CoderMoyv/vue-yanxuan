@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "imgSrc":"https://moyv.top/yanxuan/images/flash-sale/1.png",
+      "actualPrice": "¥263",
+      "retailPrice": "¥329"
+    },
+    {
+      "imgSrc":"https://moyv.top/yanxuan/images/flash-sale/2.png",
+      "actualPrice": "¥355",
+      "retailPrice": "¥399"
+    },
+    {
+      "imgSrc":"https://moyv.top/yanxuan/images/flash-sale/3.png",
+      "actualPrice": "¥83.2",
+      "retailPrice": "¥99"
+    },
+    {
+      "imgSrc":"https://moyv.top/yanxuan/images/flash-sale/4.png",
+      "actualPrice": "¥31",
+      "retailPrice": "¥36"
+    },
+    {
+      "imgSrc":"https://moyv.top/yanxuan/images/flash-sale/5.png",
+      "actualPrice": "¥119",
+      "retailPrice": "¥149"
+    },
+    {
+      "imgSrc":"https://moyv.top/yanxuan/images/flash-sale/6.png",
+      "actualPrice": "¥108",
+      "retailPrice": "¥118"
+    }
+  ]
+}
