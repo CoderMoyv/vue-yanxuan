@@ -21,7 +21,7 @@
             v-for="(item, index) in goodsList"
             :key="index"
           >
-            <router-link to="/item/detail">
+            <router-link :to="{ path: '/item/detail', query: { id: item.id } }">
               <div class="goods-img">
                 <img v-lazy="item.imgSrc" alt="" />
                 <div class="goods-desc">

@@ -1,0 +1,39 @@
+{
+    "name": "给鞋子一个家，开窗式收纳鞋盒",
+    "price": "110",
+    "id": "8",
+    "rcmd": [
+        "可视化透明前盖，看清具体收纳物",
+        "开窗拿取，从此不用翻箱倒柜找鞋子",
+        "多层堆叠，省空间，小玄关可用"
+    ],
+    "stock": "999",
+    "attr": {
+        "类型": "收纳盒",
+        "功能": "内部可视",
+        "功效": "收纳",
+        "适用季节": "春季、不限季节、冬季、夏季、春秋、其他、秋季、四季通用",
+        "产地": "中国大陆",
+        "材质": "塑料",
+        "适用场景": "客厅、卧室",
+        "温馨提示": "鞋盒部分因物流挤压，收到后可能存在轻微变形现象，安装盖子后即可恢复形状正常使用"
+    },
+    "imgSrc": [
+        "https://moyv.top/yanxuan/images/product/8/1.png",
+        "https://moyv.top/yanxuan/images/product/8/2.png",
+        "https://moyv.top/yanxuan/images/product/8/3.png",
+        "https://moyv.top/yanxuan/images/product/8/4.png",
+        "https://moyv.top/yanxuan/images/product/8/5.png"
+    ],
+    "service": [
+        "网易自营品牌",
+        "30天无忧退换",
+        "不可用券",
+        "国内部分地区不可配送"
+    ],
+    "color": [
+        "白色",
+        "卡其"
+    ],
+    "thumbnail": "https://moyv.top/yanxuan/images/item/item/8.png"
+}

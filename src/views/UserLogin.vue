@@ -33,10 +33,20 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import MainNavBar from "../components/MainNavBar.vue";
 export default {
   components: {
     MainNavBar,
+  },
+  computed: {
+    ...mapState(["isLogin"]),
+  },
+  created() {
+    if (this.isLogin) {
+      this.$router.push({ path: "/userCenter" });
+    } else {
+    }
   },
   beforeCreate() {
     document

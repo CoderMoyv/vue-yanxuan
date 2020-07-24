@@ -8,8 +8,8 @@
           alt=""
         />
         <div>
-          <p class="username">严选用户123111111111</p>
-          <p class="user-type">普通用户</p>
+          <p class="username">{{userInfo.username}}</p>
+          <p class="user-type">{{userInfo.type}}</p>
         </div>
       </div>
       <div class="header-right">
@@ -111,19 +111,31 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {};
   },
+  created(){
+    if(this.isLogin){
+
+    }else{
+      this.$router.push({path:"/userLogin"})
+    }
+  },
   methods: {
     loginOut() {
       this.$store.commit("loginOut");
+      this.$cookies.remove("userInfo");
       this.$router.push({ path: "/userLogin" });
     },
   },
-  mounted(){
-    document.body.style.backgroundColor="#eee";
-  }
+  computed: {
+    ...mapState(["userInfo","isLogin"]),
+  },
+  mounted() {
+    document.body.style.backgroundColor = "#eee";
+  },
 };
 </script>
 

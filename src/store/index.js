@@ -16,14 +16,19 @@ export default new Vuex.Store({
       "数码家电",
       "严选全球",
     ],
-    isLogin:false
+    isLogin:false,
+    userInfo:{},
   },
   mutations: {
     loginOut(state){
-      state.isLogin = false
+      state.isLogin = false;
+      state.userInfo = {}
     },
     login(state){
       state.isLogin = true
+    },
+    setLoginInfo(state,userInfo){
+      state.userInfo = userInfo
     }
   },
   actions: {},

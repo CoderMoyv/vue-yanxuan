@@ -6,6 +6,7 @@ import "amfe-flexible/index.js";
 import MainTabbar from "./components/MainTabbar.vue";
 import axios from "axios";
 import VueTouch from "vue-touch";
+import VueCookies from 'vue-cookies'
 import {
   Button,
   Tabbar,
@@ -32,7 +33,8 @@ import {
   CheckboxGroup,
   Stepper,
   Area,
-  Popup  
+  Popup,
+  Toast
 } from "vant";
 
 Vue.config.productionTip = false;
@@ -62,8 +64,10 @@ Vue.use(Button)
   .use(CheckboxGroup)
   .use(Stepper)
   .use(Area)
-  .use(Popup);
+  .use(Popup)
+  .use(Toast);
 Vue.use(VueTouch, { name: "v-touch" });
+Vue.use(VueCookies)
 Vue.component("MainTabbar", MainTabbar);
 
 new Vue({

@@ -126,8 +126,8 @@
               <span class="text_gray" v-show="selectedArea.length < 1">
                 请选择配送地址
               </span>
-              <span v-for="(item,index) in selectedArea" :key="index">
-                  {{item?item.name:''}}
+              <span v-for="(item, index) in selectedArea" :key="index">
+                {{ item ? item.name : "" }}
               </span>
             </div>
           </div>
@@ -187,10 +187,10 @@
       >
         返回
       </div>
-      <div class="btn-buy van-hairline--left">
+      <div class="btn-buy van-hairline--left" @click="buy">
         立即购买
       </div>
-      <div class="btn-add-to-cart">
+      <div class="btn-add-to-cart" @click="addToCart">
         加入购物车
       </div>
     </div>
@@ -250,6 +250,7 @@
 <script>
 import MainNavBar from "../components/MainNavBar.vue";
 import areaList from "../assets/js/arealist";
+import { mapState } from "vuex";
 export default {
   components: {
     MainNavBar,
@@ -264,7 +265,11 @@ export default {
       popupAreaPickerShow: false,
       areaList: areaList,
       selectedArea: [],
+      id: 1,
     };
+  },
+  computed: {
+    ...mapState(["isLogin", "userInfo"]),
   },
   methods: {
     swipeOnChange(index) {
@@ -287,10 +292,61 @@ export default {
       this.selectedArea = res;
       this.popupAreaPickerShow = false;
     },
+    buy() {
+      if (this.isLogin) {
+        this.$toast({
+          type: "success",
+          message: "购买成功",
+          duration: 1000,
+        });
+      } else {
+        this.$router.push({ path: "/userLogin" });
+      }
+    },
+    addToCart() {
+      if (this.isLogin) {
+        if (this.selectedColor == "请选择规格数量") {
+          this.openPopupParamSelect();
+        } else {
+          this.axios
+            .post("http://120.79.192.43:8900/addtocart", {
+              userphone: this.userInfo.phone,
+              product_id: this.id,
+              product_color: this.selectedColor,
+              product_count: this.selectedCount,
+              product_price:this.detailData.price,
+              product_thumbnail: this.detailData.thumbnail,
+              product_name: this.detailData.name
+            })
+            .then((res) => {
+              console.log(res);
+              if (res.data.status === 1) {
+                this.$toast({
+                  type: "success",
+                  message: "添加成功",
+                  duration: 1000,
+                });
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }
+      } else {
+        this.$router.push({ path: "/userLogin" });
+      }
+    },
   },
   created() {
+    if (this.$route.query.id) {
+      this.id = this.$route.query.id + "";
+    } else {
+      this.$router.push({ path: "/item" });
+      return;
+    }
+    //console.log(this.id);
     this.axios
-      .post("http://120.79.192.43:8900/detail", { id: "1" })
+      .post("http://120.79.192.43:8900/detail", { id: this.id })
       .then((res) => {
         this.detailData = res.data[0];
         //console.log(this.detailData);
@@ -357,8 +413,10 @@ export default {
 .svip-price {
   display: flex;
   align-items: center;
+  flex: 1;
 }
 .svip-discount {
+  width: 60px;
   background-image: linear-gradient(123deg, #f1c698 0, #c3945b 100%);
   color: #333;
   height: 36px;
@@ -366,6 +424,7 @@ export default {
   align-items: center;
   -webkit-clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
   clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+  box-sizing: border-box;
 }
 .svip-discount > span {
   font-size: 10px;
@@ -373,9 +432,12 @@ export default {
   font-weight: bold;
 }
 .svip-desc {
+  flex: 1;
   margin-left: 4px;
   font-size: 10px;
   color: #fff1d2;
+  transform: scale(0.9);
+  transform-origin: left;
 }
 .svip-discount-price {
   font-weight: 700;
@@ -390,7 +452,7 @@ export default {
   background-image: linear-gradient(140deg, #ffe3c4 0, #ce7f29 100%);
   border-radius: 50px;
   padding: 1px 4px;
-  font-size: 12px;
+  font-size: 10px;
   margin-right: 12px;
 }
 .base-info {
@@ -435,7 +497,7 @@ export default {
 .rcmd-banner {
   margin-top: 8px;
   background: #fafafa;
-  border: 0.1px solid #e6e6e6;
+  border: 1px solid #e6e6e6;
   padding: 8px;
   border-radius: 4px;
   position: relative;
@@ -453,7 +515,7 @@ export default {
 .angle-content {
   position: absolute;
   left: -7.5px;
-  top: 0.8px;
+  top: 1px;
   border-bottom: 8px solid #fafafa;
   width: 0;
   height: 0;
@@ -562,13 +624,13 @@ export default {
   margin-top: 16px;
 }
 .attr-item:first-child {
-  border-top: 0.1px dashed #91919115;
+  border-top: 0.1px dashed #919191;
 }
 .attr-item {
   padding: 8px 0;
   display: flex;
   font-size: 12px;
-  border-bottom: 0.1px dashed #91919115;
+  border-bottom: 0.1px dashed #919191;
 }
 .attr-key {
   width: 80px;
@@ -661,6 +723,7 @@ export default {
   color: #333;
   font-size: 14px;
   padding: 8px;
+  margin-right: 12px;
 }
 .format-list .active {
   border: 0.1px solid #dd1a21;
